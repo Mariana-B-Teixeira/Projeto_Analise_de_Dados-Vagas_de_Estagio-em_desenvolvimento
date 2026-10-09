@@ -12,7 +12,7 @@ for vaga in vagas:
     print(vaga['empresa'],": ",vaga['cargo'], sep="")
 
 
-print(len(vagas))
+total_vagas = len(vagas)
 
 skills = {
 
@@ -164,16 +164,20 @@ skills = {
 #     for skill in skills[categoria]:
 #         todas_skills.add(skill)
 
+if total_vagas > 0:
+    print("Requisitos:")
 
-print("Requisitos:")
+    for categoria in skills:
+        print(f"\n====== {categoria.upper()} ======")
+        for skill in skills[categoria]:
+            contador = 0
+            for vaga in vagas:
+                if skill in vaga["requisitos"].lower():
+                    contador = contador + 1
+            
+            if contador > 0:
+                frequencia = (contador / total_vagas) * 100
+                print(f"{skill}: {contador} vagas - {frequencia:.1f}%")
 
-for categoria in skills:
-    print(f"\n====== {categoria.upper()} ======")
-    for skill in skills[categoria]:
-        contador = 0
-        for vaga in vagas:
-            if skill in vaga["requisitos"].lower():
-                contador = contador + 1
-        
-        if contador > 0:
-            print(skill, ":", contador, sep="")
+else:
+    print("Não há vagas cadastradas para analisar.")
