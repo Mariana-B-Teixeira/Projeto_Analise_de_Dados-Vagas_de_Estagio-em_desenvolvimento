@@ -8,8 +8,6 @@ with open("vagas_estagio.csv", encoding="utf-8") as file:
     for vaga in reader:
         vagas.append(vaga)
 
-print(vagas)
-
 for vaga in vagas:
     print(vaga['empresa'],": ",vaga['cargo'], sep="")
 
@@ -160,20 +158,22 @@ skills = {
     ]
 }
 
-# Tira duplicata.
-todas_skills = set()
-for categoria in skills:
-    for skill in skills[categoria]:
-        todas_skills.add(skill)
+# # Tira duplicata.
+# todas_skills = set()
+# for categoria in skills:
+#     for skill in skills[categoria]:
+#         todas_skills.add(skill)
 
 
 print("Requisitos:")
 
-for skill in todas_skills:
-    contador = 0
-    for vaga in vagas:
-        if skill in vaga["requisitos"].lower():
-            contador = contador + 1
-
-    if contador > 0:
-        print(skill, ":", contador)
+for categoria in skills:
+    print(f"\n====== {categoria.upper()} ======")
+    for skill in skills[categoria]:
+        contador = 0
+        for vaga in vagas:
+            if skill in vaga["requisitos"].lower():
+                contador = contador + 1
+        
+        if contador > 0:
+            print(skill, ":", contador, sep="")
