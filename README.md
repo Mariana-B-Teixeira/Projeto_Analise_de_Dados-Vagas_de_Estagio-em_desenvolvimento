@@ -2,7 +2,9 @@
 
 > Projeto em desenvolvimento para analisar vagas de estágio e identificar as competências mais solicitadas pelo mercado de tecnologia.
 
-O projeto combina **Python, CSV, n8n e WhatsApp** para transformar vagas encontradas durante a busca por oportunidades em dados que podem ser analisados.
+O projeto combina **Python, CSV e n8n** para transformar vagas encontradas durante a busca por oportunidades em dados que podem ser analisados.
+
+A proposta é evoluir o projeto para utilizar **mensageria como ponto de entrada das vagas**, inicialmente validando a automação com Telegram e, posteriormente, avaliando uma integração com WhatsApp.
 
 ---
 
@@ -24,11 +26,11 @@ A análise considera tanto **hard skills** quanto **soft skills**.
 
 O fluxo planejado conecta a coleta das vagas à análise dos dados:
 
-**WhatsApp → n8n → CSV → Python → Análise → Resultados**
+**Mensageria → n8n → CSV → Python → Análise → Resultados**
 
 ### 1. Coleta
 
-A vaga é enviada pelo **WhatsApp** para facilitar o registro durante a busca por oportunidades.
+A vaga é enviada por um aplicativo de mensagens para facilitar o registro durante a busca por oportunidades, encaixando a organização de forma prática no cotidiano de quem utiliza.
 
 ### 2. Organização
 
