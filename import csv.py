@@ -167,9 +167,14 @@ skills = {
 if total_vagas > 0:
     print("Requisitos:")
 
+    ranking_geral = {}
+
     for categoria in skills:
+        ranking_categoria = {}
+
         print(f"\n====== {categoria.upper()} ======")
         for skill in skills[categoria]:
+
             contador = 0
             for vaga in vagas:
                 if skill in vaga["requisitos"].lower():
@@ -177,7 +182,28 @@ if total_vagas > 0:
             
             if contador > 0:
                 frequencia = (contador / total_vagas) * 100
-                print(f"{skill}: {contador} vagas - {frequencia:.1f}%")
+
+                ranking_categoria[skill] = {
+                    "quantidade": contador,
+                    "frequencia": frequencia
+                }
+
+                ranking_geral[skill] = {
+                    "quantidade": contador,
+                    "frequencia": frequencia
+                }
+
+        ranking_ordenado = sorted(ranking_categoria.items(), key=lambda item:item[1]["frequencia"], reverse=True)
+
+        for skill, dados in ranking_ordenado:
+                print(f"{skill}: {dados['quantidade']} vagas - {dados['frequencia']:.1f}%")
+
+    print(f"\n====== ***RANKING GERAL*** ======")
+
+    ranking_geral_ordenado = sorted(ranking_geral.items(), key=lambda item:item[1]["frequencia"], reverse=True)
+
+    for skill, dados in ranking_geral_ordenado:
+        print(f"{skill}: {dados['quantidade']} vagas - {dados['frequencia']:.1f}%")
 
 else:
     print("Não há vagas cadastradas para analisar.")
