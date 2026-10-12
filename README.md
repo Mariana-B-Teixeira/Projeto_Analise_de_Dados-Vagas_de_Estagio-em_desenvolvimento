@@ -1,4 +1,4 @@
-# 📊 Análise das skills mais pedidas em vagas de estágio de Dados e IA
+# 📊 Análise das skills mais pedidas em vagas de estágio
 
 > Projeto em desenvolvimento para analisar vagas de estágio e identificar as competências mais solicitadas pelo mercado de tecnologia.
 
@@ -12,7 +12,7 @@ A proposta é evoluir o projeto para utilizar **mensageria como ponto de entrada
 
 A proposta é criar um fluxo que permita:
 
-- registrar vagas de estágio de forma prática;
+- registrar vagas de estágio que interessam ao usuário de forma prática;
 - organizar os dados coletados;
 - identificar as competências presentes nos requisitos;
 - contabilizar a frequência dessas competências;
