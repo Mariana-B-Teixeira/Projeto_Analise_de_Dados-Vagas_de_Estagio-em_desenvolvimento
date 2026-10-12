@@ -143,6 +143,7 @@ skills = {
 }
 
 variacoes_habilidades = {
+    # DADOS
     "análise de dados": [
         "análise de dados",
         "análises de dados",
@@ -156,35 +157,81 @@ variacoes_habilidades = {
     "banco de dados": [
         "banco de dados",
         "bancos de dados",
-        "database"
+        "database",
+        "databases"
     ],
     "modelagem de dados": [
         "modelagem de dados",
-        "modelagens de dados"
+        "modelagens de dados",
+        "data modeling",
+        "data modelling"
     ],
     "pipeline de dados": [
         "pipeline de dados",
-        "pipelines de dados"
+        "pipelines de dados",
+        "data pipeline",
+        "data pipelines"
     ],
     "engenharia de dados": [
         "engenharia de dados",
-        "engenharias de dados"
+        "engenharias de dados",
+        "data engineering"
+    ],
+    "estatística": [
+        "estatística",
+        "estatísticas",
+        "statistics"
+    ],
+
+    # INTELIGÊNCIA ARTIFICIAL
+    "inteligência artificial": [
+        "inteligência artificial",
+        "artificial intelligence"
+    ],
+    "ia generativa": [
+        "ia generativa",
+        "generative ai"
+    ],
+    "machine learning": [
+        "machine learning",
+        "aprendizado de máquina"
+    ],
+    "deep learning": [
+        "deep learning",
+        "aprendizagem profunda",
+        "aprendizado profundo"
     ],
     "large language model": [
         "large language model",
-        "large language models"
+        "large language models",
+        "llm",
+        "llms"
+    ],
+    "rag": [
+        "rag",
+        "retrieval augmented generation"
+    ],
+    "engenharia de prompt": [
+        "engenharia de prompt",
+        "engenharia de prompts",
+        "prompt engineering"
     ],
     "agentes de ia": [
         "agente de ia",
-        "agentes de ia"
-    ],
-    "ai agents": [
+        "agentes de ia",
         "ai agent",
         "ai agents"
     ],
     "agentes inteligentes": [
         "agente inteligente",
-        "agentes inteligentes"
+        "agentes inteligentes",
+        "intelligent agents"
+    ],
+
+    # DESENVOLVIMENTO
+    "backend": [
+        "backend",
+        "back-end"
     ],
     "api": [
         "api",
@@ -192,23 +239,46 @@ variacoes_habilidades = {
     ],
     "api rest": [
         "api rest",
-        "apis rest"
-    ],
-    "rest api": [
+        "apis rest",
         "rest api",
         "rest apis"
     ],
+    "programação orientada a objetos": [
+        "programação orientada a objetos",
+        "poo",
+        "object-oriented programming",
+        "oop"
+    ],
     "teste": [
         "teste",
-        "testes"
+        "testes",
+        "test",
+        "tests"
     ],
     "teste unitário": [
         "teste unitário",
-        "testes unitários"
+        "testes unitários",
+        "unit test",
+        "unit tests",
+        "unit testing"
+    ],
+    "debugging": [
+        "debug",
+        "debugging"
+    ],
+    "clean code": [
+        "clean code"
+    ],
+
+    # AUTOMAÇÃO
+    "automação": [
+        "automação",
+        "automation"
     ],
     "automação de processo": [
         "automação de processo",
-        "automação de processos"
+        "automação de processos",
+        "process automation"
     ],
     "workflow": [
         "workflow",
@@ -216,7 +286,27 @@ variacoes_habilidades = {
     ],
     "integração": [
         "integração",
-        "integrações"
+        "integrações",
+        "integration",
+        "integrations"
+    ],
+    "webhook": [
+        "webhook",
+        "webhooks"
+    ],
+
+    # BANCO DE DADOS
+    "postgresql": [
+        "postgresql",
+        "postgres"
+    ],
+    "mongodb": [
+        "mongodb",
+        "mongo db"
+    ],
+    "nosql": [
+        "nosql",
+        "no sql"
     ],
     "join": [
         "join",
@@ -224,22 +314,83 @@ variacoes_habilidades = {
     ],
     "consulta sql": [
         "consulta sql",
-        "consultas sql"
+        "consultas sql",
+        "sql query",
+        "sql queries"
+    ],
+
+    # FERRAMENTAS
+    "github": [
+        "github"
+    ],
+    "gitlab": [
+        "gitlab"
+    ],
+    "docker compose": [
+        "docker compose",
+        "docker-compose"
+    ],
+    "visual studio code": [
+        "visual studio code",
+        "vscode"
+    ],
+
+    # SOFT SKILLS
+    "comunicação": [
+        "comunicação",
+        "comunicacao",
+        "communication"
     ],
     "trabalho em equipe": [
         "trabalho em equipe",
         "trabalhos em equipe",
         "trabalho em equipa",
-        "teamwork"
+        "teamwork",
+        "team work"
     ],
     "colaboração": [
         "colaboração",
-        "colaborações"
+        "colaborações",
+        "collaboration"
+    ],
+    "proatividade": [
+        "proatividade",
+        "proactive",
+        "proactivity"
+    ],
+    "organização": [
+        "organização",
+        "organizacao",
+        "organization",
+        "organisation"
+    ],
+    "raciocínio lógico": [
+        "raciocínio lógico",
+        "raciocinio logico",
+        "logical reasoning"
     ],
     "resolução de problemas": [
         "resolução de problema",
         "resolução de problemas",
         "problem solving"
+    ],
+    "pensamento crítico": [
+        "pensamento crítico",
+        "pensamento critico",
+        "critical thinking"
+    ],
+    "adaptabilidade": [
+        "adaptabilidade",
+        "adaptability"
+    ],
+    "autonomia": [
+        "autonomia",
+        "autonomy"
+    ],
+    "liderança": [
+        "liderança",
+        "lideranca",
+        "leadership"
     ]
 }
 
@@ -316,7 +467,7 @@ if total_vagas > 0:
     print("\nRequisitos:")
 
     print(f"Total de vagas analisadas: {total_vagas}")
-    
+
     todas_habilidades = obter_todas_habilidades(skills, variacoes_habilidades)
 
     ranking_geral = {}
@@ -360,8 +511,18 @@ if total_vagas > 0:
 
         ranking_ordenado = sorted(ranking_categoria.items(), key=lambda item:item[1]["frequencia"], reverse=True)
 
+        nome_arquivo = f"skill_vaga_{categoria}.csv"
+
+        with open(nome_arquivo, "w", newline="", encoding="utf-8") as file:
+            writer = csv.writer(file, delimiter=";")
+            writer.writerow(["Habilidade", "Quantidade", "Frequência"])
+
+            for skill, dados in ranking_ordenado:
+                writer.writerow([skill, dados["quantidade"], round(dados["frequencia"], 1)])
+
+
         for skill, dados in ranking_ordenado:
-                print(f"{skill} - quantidade: {dados['quantidade']} - {dados['frequencia']:.1f}%")
+            print(f"{skill} - quantidade: {dados['quantidade']} - {dados['frequencia']:.1f}%")
 
     print(f"\n====== ***RANKING GERAL*** ======")
 
@@ -370,5 +531,27 @@ if total_vagas > 0:
     for skill, dados in ranking_geral_ordenado:
         print(f"{skill} - quantidade: {dados['quantidade']} - {dados['frequencia']:.1f}%")
 
+    with open("skill_vaga_geral.csv", "w", newline="",encoding="utf-8") as file:
+        writer = csv.writer(file, delimiter=";")
+
+        writer.writerow(["Habilidade", "Quantidade", "Frequência"])
+
+        for skill, dados in ranking_geral_ordenado:
+            writer.writerow([skill, dados['quantidade'], round(dados['frequencia'], 1)])
+
 else:
     print("Não há vagas cadastradas para analisar.")
+
+
+print("\n====== TESTE DE RECONHECIMENTO ======")
+
+print(encontrar_habilidade("Conhecimento em Python", "python"))
+print(encontrar_habilidade("Conhecimento em APIs REST", "api"))
+print(encontrar_habilidade("Experiência com comunicação", "comunicação"))
+print(encontrar_habilidade("Conhecimento em programação", "python"))
+
+print(encontrar_variacao("Conhecimento em APIs REST", "api", variacoes_habilidades))
+
+texto_teste = "Conhecimento em API e experiência com APIs"
+
+print(encontrar_variacao(texto_teste, "api", variacoes_habilidades))
