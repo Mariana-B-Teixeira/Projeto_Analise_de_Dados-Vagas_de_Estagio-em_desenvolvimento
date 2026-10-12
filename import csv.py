@@ -1,3 +1,5 @@
+import re
+import unicodedata
 import csv
 
 vagas = []
@@ -21,17 +23,14 @@ skills = {
         "sql",
         "excel",
         "análise de dados",
-        "analise de dados",
         "data analysis",
         "analytics",
         "data analytics",
         "data science",
         "ciência de dados",
-        "ciencia de dados",
         "pandas",
         "numpy",
         "estatística",
-        "estatistica",
         "banco de dados",
         "database",
         "modelagem de dados",
@@ -42,13 +41,11 @@ skills = {
 
     "inteligencia_artificial": [
         "inteligência artificial",
-        "inteligencia artificial",
         "artificial intelligence",
         "ia generativa",
         "generative ai",
         "machine learning",
         "aprendizado de máquina",
-        "aprendizado de maquina",
         "deep learning",
         "llm",
         "large language model",
@@ -81,12 +78,10 @@ skills = {
         "api rest",
         "rest api",
         "programação orientada a objetos",
-        "programacao orientada a objetos",
         "poo",
         "crud",
-        "testes",
-        "testes unitários",
-        "testes unitarios",
+        "teste",
+        "teste unitário",
         "debug",
         "debugging",
         "clean code"
@@ -94,15 +89,11 @@ skills = {
 
     "automacao": [
         "automação",
-        "automacao",
-        "automação de processos",
-        "automacao de processos",
+        "automação de processo",
         "n8n",
         "workflow",
-        "workflows",
         "power automate",
         "integração",
-        "integracao",
         "webhook"
     ],
 
@@ -114,8 +105,8 @@ skills = {
         "sql server",
         "mongodb",
         "nosql",
-        "joins",
-        "consultas sql"
+        "join",
+        "consulta sql"
     ],
 
     "ferramentas": [
@@ -135,28 +126,123 @@ skills = {
 
     "soft_skills": [
         "comunicação",
-        "comunicacao",
         "trabalho em equipe",
         "trabalho em equipa",
         "teamwork",
         "colaboração",
-        "colaboracao",
         "proatividade",
         "organização",
-        "organizacao",
         "raciocínio lógico",
-        "raciocinio logico",
         "resolução de problemas",
-        "resolucao de problemas",
         "problem solving",
         "pensamento crítico",
-        "pensamento critico",
         "adaptabilidade",
         "autonomia",
-        "liderança",
-        "lideranca"
+        "liderança"
     ]
 }
+
+variacoes_habilidades = {
+    "análise de dados": [
+        "análise de dados",
+        "análises de dados",
+        "data analysis"
+    ],
+    "ciência de dados": [
+        "ciência de dados",
+        "ciências de dados",
+        "data science"
+    ],
+    "banco de dados": [
+        "banco de dados",
+        "bancos de dados",
+        "database"
+    ],
+    "modelagem de dados": [
+        "modelagem de dados",
+        "modelagens de dados"
+    ],
+    "pipeline de dados": [
+        "pipeline de dados",
+        "pipelines de dados"
+    ],
+    "engenharia de dados": [
+        "engenharia de dados",
+        "engenharias de dados"
+    ],
+    "large language model": [
+        "large language model",
+        "large language models"
+    ],
+    "agentes de ia": [
+        "agente de ia",
+        "agentes de ia"
+    ],
+    "ai agents": [
+        "ai agent",
+        "ai agents"
+    ],
+    "agentes inteligentes": [
+        "agente inteligente",
+        "agentes inteligentes"
+    ],
+    "api": [
+        "api",
+        "apis"
+    ],
+    "api rest": [
+        "api rest",
+        "apis rest"
+    ],
+    "rest api": [
+        "rest api",
+        "rest apis"
+    ],
+    "teste": [
+        "teste",
+        "testes"
+    ],
+    "teste unitário": [
+        "teste unitário",
+        "testes unitários"
+    ],
+    "automação de processo": [
+        "automação de processo",
+        "automação de processos"
+    ],
+    "workflow": [
+        "workflow",
+        "workflows"
+    ],
+    "integração": [
+        "integração",
+        "integrações"
+    ],
+    "join": [
+        "join",
+        "joins"
+    ],
+    "consulta sql": [
+        "consulta sql",
+        "consultas sql"
+    ],
+    "trabalho em equipe": [
+        "trabalho em equipe",
+        "trabalhos em equipe",
+        "trabalho em equipa",
+        "teamwork"
+    ],
+    "colaboração": [
+        "colaboração",
+        "colaborações"
+    ],
+    "resolução de problemas": [
+        "resolução de problema",
+        "resolução de problemas",
+        "problem solving"
+    ]
+}
+
 
 # # Tira duplicata.
 # todas_skills = set()
@@ -164,20 +250,104 @@ skills = {
 #     for skill in skills[categoria]:
 #         todas_skills.add(skill)
 
+def normalizar_texto(texto):
+    texto = texto.lower()
+    texto = unicodedata.normalize("NFD", texto)
+
+    caracteres = []
+
+    for caractere in texto:
+        if unicodedata.category(caractere) != "Mn":
+            caracteres.append(caractere)
+
+    texto = "".join(caracteres)
+    return texto
+
+def encontrar_habilidade(texto, skill):
+    texto = normalizar_texto(texto)
+    skill = normalizar_texto(skill)
+
+    habilidade = rf"\b{re.escape(skill)}\b"
+
+    return re.search(habilidade, texto) is not None
+
+def encontrar_variacao(texto, habilidade, variacoes_habilidades):
+    variacoes = variacoes_habilidades.get(habilidade, [habilidade])
+
+    for variacao in variacoes:
+        if encontrar_habilidade(texto, variacao):
+            return True
+
+    return False
+
+def obter_habilidades(categoria, skills, variacoes_habilidades):
+    habilidades = []
+
+    for skill in skills[categoria]:
+        habilidade_oficial = skill
+
+        for nome, variacoes in variacoes_habilidades.items():
+            if skill in variacoes:
+                habilidade_oficial = nome
+                break
+
+        if habilidade_oficial not in habilidades:
+            habilidades.append(habilidade_oficial)
+
+    return habilidades
+
+def obter_todas_habilidades(skills, variacoes_habilidades):
+    todas_habilidades = []
+
+    for categoria in skills:
+        habilidades = obter_habilidades(
+            categoria,
+            skills,
+            variacoes_habilidades
+        )
+
+        for skill in habilidades:
+            if skill not in todas_habilidades:
+                todas_habilidades.append(skill)
+
+    return todas_habilidades
+
 if total_vagas > 0:
-    print("Requisitos:")
+    print("\nRequisitos:")
+
+    print(f"Total de vagas analisadas: {total_vagas}")
+    
+    todas_habilidades = obter_todas_habilidades(skills, variacoes_habilidades)
 
     ranking_geral = {}
+    
+    for skill in todas_habilidades:
+        contador = 0
+
+        for vaga in vagas:
+            if encontrar_variacao(vaga["requisitos"] + " " + vaga["diferenciais"], skill, variacoes_habilidades):
+
+                contador += 1
+
+        if contador > 0:
+            frequencia = (contador / total_vagas) * 100
+
+            ranking_geral[skill] = {
+                "quantidade": contador,
+                "frequencia": frequencia
+            }
 
     for categoria in skills:
         ranking_categoria = {}
 
         print(f"\n====== {categoria.upper()} ======")
-        for skill in skills[categoria]:
+        habilidades = obter_habilidades(categoria, skills, variacoes_habilidades)
+
+        for skill in habilidades:
 
             contador = 0
             for vaga in vagas:
-                if skill in vaga["requisitos"].lower():
+                if encontrar_variacao(vaga["requisitos"] + " " + vaga["diferenciais"], skill, variacoes_habilidades):
                     contador = contador + 1
             
             if contador > 0:
@@ -188,22 +358,17 @@ if total_vagas > 0:
                     "frequencia": frequencia
                 }
 
-                ranking_geral[skill] = {
-                    "quantidade": contador,
-                    "frequencia": frequencia
-                }
-
         ranking_ordenado = sorted(ranking_categoria.items(), key=lambda item:item[1]["frequencia"], reverse=True)
 
         for skill, dados in ranking_ordenado:
-                print(f"{skill}: {dados['quantidade']} vagas - {dados['frequencia']:.1f}%")
+                print(f"{skill} - quantidade: {dados['quantidade']} - {dados['frequencia']:.1f}%")
 
     print(f"\n====== ***RANKING GERAL*** ======")
 
-    ranking_geral_ordenado = sorted(ranking_geral.items(), key=lambda item:item[1]["frequencia"], reverse=True)
+    ranking_geral_ordenado = sorted(ranking_geral.items(), key=lambda item: item[1]["frequencia"], reverse=True)
 
     for skill, dados in ranking_geral_ordenado:
-        print(f"{skill}: {dados['quantidade']} vagas - {dados['frequencia']:.1f}%")
+        print(f"{skill} - quantidade: {dados['quantidade']} - {dados['frequencia']:.1f}%")
 
 else:
     print("Não há vagas cadastradas para analisar.")
