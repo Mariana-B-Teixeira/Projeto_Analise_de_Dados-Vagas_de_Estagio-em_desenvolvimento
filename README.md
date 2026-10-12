@@ -1,4 +1,4 @@
-# 📊 Análise de Vagas de Estágio em Tecnologia
+# 📊 Análise das skills mais pedidas em vagas de estágio de Dados e IA
 
 > Projeto em desenvolvimento para analisar vagas de estágio e identificar as competências mais solicitadas pelo mercado de tecnologia.
 
