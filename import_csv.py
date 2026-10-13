@@ -1,6 +1,7 @@
 import re
 import unicodedata
 import csv
+import os
 
 vagas = []
 
@@ -511,7 +512,7 @@ if total_vagas > 0:
 
         ranking_ordenado = sorted(ranking_categoria.items(), key=lambda item:item[1]["frequencia"], reverse=True)
 
-        nome_arquivo = f"skill_vaga_{categoria}.csv"
+        nome_arquivo = os.path.join("resultados", f"skill_vaga_{categoria}.csv")
 
         with open(nome_arquivo, "w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file, delimiter=";")
@@ -531,7 +532,7 @@ if total_vagas > 0:
     for skill, dados in ranking_geral_ordenado:
         print(f"{skill} - quantidade: {dados['quantidade']} - {dados['frequencia']:.1f}%")
 
-    with open("skill_vaga_geral.csv", "w", newline="",encoding="utf-8") as file:
+    with open(os.path.join("resultados", "skill_vaga_geral.csv"), "w", newline="",encoding="utf-8") as file:
         writer = csv.writer(file, delimiter=";")
 
         writer.writerow(["Habilidade", "Quantidade", "Frequência"])
