@@ -2,6 +2,7 @@ import re
 import unicodedata
 import csv
 import os
+import matplotlib.pyplot as plt
 
 vagas = []
 
@@ -539,6 +540,24 @@ if total_vagas > 0:
 
         for skill, dados in ranking_geral_ordenado:
             writer.writerow([skill, dados['quantidade'], round(dados['frequencia'], 1)])
+
+    top_habilidades = ranking_geral_ordenado[:10]
+    nomes = [item[0] for item in top_habilidades]
+    quantidades = [item[1]["quantidade"] for item in top_habilidades]
+
+    plt.figure(figsize=(10, 6))
+    plt.gcf().set_facecolor("black")
+    plt.gca().set_facecolor("black")
+    plt.bar(nomes[::-1], quantidades[::-1], color="#B1718E")
+    plt.xlabel("HABILIDADE", color="white", fontsize=12)
+    plt.ylabel("QUANTIDADE DE VAGAS", color="white", fontsize=10)
+    plt.title("Top 10 habilidades mais solicitadas", color="white", fontname="cursive", fontsize=16, fontweight="bold")
+    plt.xticks(color="white")
+    plt.yticks(color="white")
+    plt.tight_layout()
+
+    plt.savefig(os.path.join("resultados", "top_10_habilidades.png"), facecolor="black")
+    plt.show()
 
 else:
     print("Não há vagas cadastradas para analisar.")
